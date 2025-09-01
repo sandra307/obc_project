@@ -61,7 +61,7 @@ match dl with
 (*function to build voter state unit*)
 let build_v_state_unit (n:int) (d:int) (ax_id:int):voter_state_unit={
   axis=int_to_nat ax_id;
-  delta=int_to_nat 0;
+  delta=int_to_nat 2;
   vs=build_voter_state n d
 
 
@@ -112,7 +112,7 @@ Not_miscomparing->print_endline "  Miscomparing status: Not miscomparing\n"|
 Maybe_miscomparing->print_endline "  Miscomparing status: Maybe miscomapring\n");
 
 Printf.printf "  Risky count: %d\n" (nat_to_int pvd.s_status.risky_count);
-print_endline"  ---------\n";;
+print_endline"   ---------\n";;
 
 (*function to print sensor data list*)
 let print_snsr_data_list (d:snsr_data list)=
@@ -166,7 +166,9 @@ let rec obc_cycles old unit_list =
       flush stdout;         
       obc_cycles res rest  ;;   
 let ()=
-let (n,d,u_list)=read_file "input.txt" in
+  print_endline "Enter the input filename:";
+  let filename = read_line () in
+let (n,d,u_list)=read_file filename in
 
 ignore(obc_cycles (obc_init n d) u_list);;
 
