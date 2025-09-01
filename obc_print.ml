@@ -84,9 +84,13 @@ let print_validity_flag h=match h with
 Valid_obc->print_endline" Validity Status: Valid OBC\n"|
 Invalid_obc->print_endline "Validity Status: Invalid OBC\n";;
 
+
+
+
 (*function to print output age*)
 let print_op_age n=
 Printf.printf "Output age: %d\n" n;;
+
 
 
 (*function to print snsr_output*)
@@ -97,6 +101,9 @@ Printf.printf "  Signal Value: %d\n"(nat_to_int sp.snsr_reading.sig_val);
 match sp.snsr_reading.sig_type with 
 Good_s->print_endline "  Signal health: Good \n"|
 Bad_s->print_endline "  Signal health: Bad\n" ;;
+
+
+
 
 (*function to print snsr_data*)
 let  print_snsr_data (pvd:snsr_data)=
@@ -110,14 +117,19 @@ Not_isolated->print_endline "  Isolation status: Not Isolated\n" );
 Miscomparing->print_endline "  Miscomparing status: Miscomparing \n "|
 Not_miscomparing->print_endline "  Miscomparing status: Not miscomparing\n"|
 Maybe_miscomparing->print_endline "  Miscomparing status: Maybe miscomapring\n");
-
 Printf.printf "  Risky count: %d\n" (nat_to_int pvd.s_status.risky_count);
 print_endline"   ---------\n";;
+
+
+
+
 
 (*function to print sensor data list*)
 let print_snsr_data_list (d:snsr_data list)=
 print_endline"   ----------\n";
 List.iter print_snsr_data d;;
+
+
 
 (*function to print validity*)
 let print_v_valid v =
@@ -125,6 +137,9 @@ let print_v_valid v =
   Valid->print_endline " Validity Status: Valid\n"|
   Un_id->print_endline " Validity Status: Un_id\n"|
   Not_valid->print_endline " Validity Status: Not_valid\n";;
+
+ 
+
 
 (*function to print voter state*)
 let print_voter_state  (v:voter_state)=
@@ -134,11 +149,16 @@ print_snsr_op v.voter_output;
 print_snsr_data v.presrvd_data;
 print_snsr_data_list v.s_data_lst;;
 
+
+
+
 (*function to print voter state unit *)
 let print_voter_state_unit (vsa:voter_state_unit)=
 Printf.printf " Axis ID: %d\n"(nat_to_int vsa.axis);
 Printf.printf " Delta: %d\n" (nat_to_int vsa.delta);
 print_voter_state vsa.vs;;
+
+
 
 (*function to print voter state unit list*)
 let print_voter_state_unit_list (vl:voter_state_unit list)=
@@ -154,6 +174,77 @@ print_voter_state_unit_list o.v_lst;;
 
 
 
+
+
+(*---------------------------------------------------------------------------------------------------------------------------------------------------*)
+
+
+let print_validity_flag_new h=match h with 
+Valid_obc->Printf.printf"V  "|
+Invalid_obc->Printf.printf "IV  ";;
+
+
+let print_op_age_new n=
+Printf.printf "%d | " n;;
+
+let print_snsr_op_new (sp:snsr_output)=
+Printf.printf "%d | "(nat_to_int sp.snsr_id) ;
+Printf.printf "%d | "(nat_to_int sp.snsr_reading.sig_val);
+match sp.snsr_reading.sig_type with 
+Good_s->Printf.printf "G | "|
+Bad_s->Printf.printf"B | " ;;
+
+
+
+let  print_snsr_data_new  (pvd:snsr_data)=
+print_snsr_op_new (pvd.s_output);
+(*printing snsr_status*)
+(match pvd.s_status.iso_status with
+Isolated->Printf.printf "I | "|
+Not_isolated->Printf.printf "NI | " );
+
+(match pvd.s_status.miscomp_status with 
+Miscomparing->Printf.printf"M | "|
+Not_miscomparing->Printf.printf "NM | "|
+Maybe_miscomparing->Printf.printf"MM | ");
+Printf.printf "%d | " (nat_to_int pvd.s_status.risky_count);;
+
+
+let print_snsr_data_list_new (d:snsr_data list)=
+List.iter print_snsr_data_new d;;
+
+ let print_v_valid_new v =
+  match v with 
+  Valid->Printf.printf"V | "|
+  Un_id->Printf.printf "UN_ID| "|
+  Not_valid->Printf.printf "NV| ";;
+
+let print_voter_state_new (v:voter_state)=
+print_v_valid_new v.voter_validity;
+print_op_age_new (nat_to_int v.output_age);
+print_snsr_op_new v.voter_output;
+print_snsr_data_list_new v.s_data_lst;;
+
+
+let print_voter_state_unit_new  (vsa:voter_state_unit)=
+Printf.printf " %d |"(nat_to_int vsa.axis);
+print_voter_state_new vsa.vs;
+print_endline"";;
+
+let print_voter_state_unit_list_new (vl:voter_state_unit list)=
+List.iter print_voter_state_unit_new vl;;
+
+let print_new_obc (o:obc)=
+print_endline"";
+print_validity_flag_new o.switch_flag;
+Printf.printf"| %d \n"(nat_to_int o.obc_risk_count);
+print_voter_state_unit_list_new o.v_lst;;
+
+
+
+
+
+
 (*function to apply obc_main on unit_output list*)
 let rec obc_cycles old unit_list =
   match unit_list with
@@ -161,15 +252,18 @@ let rec obc_cycles old unit_list =
   | cycle :: rest ->
 
       let res = obc_main old cycle in  
-      print_obc res ;
-      print_endline"**********************************************************";   
+      print_new_obc res ;
+        print_endline"";   
+      print_endline"";
+      print_endline "";
       flush stdout;         
-      obc_cycles res rest  ;;   
+      obc_cycles res rest ;;
+    
 let ()=
   print_endline "Enter the input filename:";
   let filename = read_line () in
 let (n,d,u_list)=read_file filename in
-
+print_endline "Validity Status Obc_Risky_Count Axis_ID Voter_Validity Output_Age  Voter_output[Snsr_ID Sig_Val Sig_Health] Voter_s_data_list[S_ID Sig_Val Sig_Health Iso_status Miscomp_status Risky_Count]";
 ignore(obc_cycles (obc_init n d) u_list);;
 
 
