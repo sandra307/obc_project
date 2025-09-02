@@ -180,16 +180,16 @@ print_voter_state_unit_list o.v_lst;;
 
 
 let print_validity_flag_new h=match h with 
-Valid_obc->Printf.printf"V  "|
-Invalid_obc->Printf.printf "IV  ";;
+Valid_obc->Printf.printf"%-2s""V  "|
+Invalid_obc->Printf.printf "%-2s""IV  ";;
 
 
 let print_op_age_new n=
-Printf.printf "%d | " n;;
+Printf.printf "%2d| " n;;
 
 let print_snsr_op_new (sp:snsr_output)=
 Printf.printf "%d | "(nat_to_int sp.snsr_id) ;
-Printf.printf "%d | "(nat_to_int sp.snsr_reading.sig_val);
+Printf.printf "%2d | "(nat_to_int sp.snsr_reading.sig_val);
 match sp.snsr_reading.sig_type with 
 Good_s->Printf.printf "G | "|
 Bad_s->Printf.printf"B | " ;;
@@ -200,14 +200,14 @@ let  print_snsr_data_new  (pvd:snsr_data)=
 print_snsr_op_new (pvd.s_output);
 (*printing snsr_status*)
 (match pvd.s_status.iso_status with
-Isolated->Printf.printf "I | "|
-Not_isolated->Printf.printf "NI | " );
+Isolated->Printf.printf"%-2s""I | "|
+Not_isolated->Printf.printf"%-2s" "NI| " );
 
 (match pvd.s_status.miscomp_status with 
-Miscomparing->Printf.printf"M | "|
-Not_miscomparing->Printf.printf "NM | "|
-Maybe_miscomparing->Printf.printf"MM | ");
-Printf.printf "%d | " (nat_to_int pvd.s_status.risky_count);;
+Miscomparing->Printf.printf"%-2s""M | "|
+Not_miscomparing->Printf.printf "%-2s""NM| "|
+Maybe_miscomparing->Printf.printf"%-2s""MM| ");
+Printf.printf "%d| " (nat_to_int pvd.s_status.risky_count);;
 
 
 let print_snsr_data_list_new (d:snsr_data list)=
@@ -215,9 +215,9 @@ List.iter print_snsr_data_new d;;
 
  let print_v_valid_new v =
   match v with 
-  Valid->Printf.printf"V | "|
-  Un_id->Printf.printf "UN_ID| "|
-  Not_valid->Printf.printf "NV| ";;
+  Valid->Printf.printf"%-2s""V | "|
+  Un_id->Printf.printf "%-2s""UI| "|
+  Not_valid->Printf.printf "%-2s""NV| ";;
 
 let print_voter_state_new (v:voter_state)=
 print_v_valid_new v.voter_validity;
@@ -237,7 +237,7 @@ List.iter print_voter_state_unit_new vl;;
 let print_new_obc (o:obc)=
 print_endline"";
 print_validity_flag_new o.switch_flag;
-Printf.printf"| %d \n"(nat_to_int o.obc_risk_count);
+Printf.printf"| %d\n"(nat_to_int o.obc_risk_count);
 print_voter_state_unit_list_new o.v_lst;;
 
 
