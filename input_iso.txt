@@ -1,0 +1,12 @@
+5
+3
+1|10|true |20|false|30|true |true|true; 2|11|true |19|true|32|false|true |true ; 3|10|true |20|false|30|true |true |true ; 4|12|true |22|true |29|false|true |true ; 5|9 |true |20|false|31|true |true |true#
+1|12|true |22|false|32|true |true|true; 2|13|true |20|true|31|true |true |true ; 3|12|true |42|true |32|true |true |true ; 4|9 |true |28|true |29|true |true |true ; 5|12|true |22|true |32|false|true |true#
+1|10|true |20|false|30|true |true|true; 2|11|true |19|true|32|false|true |true ; 3|10|true |20|false|30|true |true |true ; 4|12|true |22|true |29|false|true |true ; 5|9 |true |20|false|31|true |true |true#
+1|12|true |22|false|32|false|true|true; 2|13|true |20|true|31|true |true |true ; 3|12|true |42|true |32|true |true |true ; 4|9 |true |28|true |29|true |true |true ; 5|12|true |22|true |32|false|true |true #
+1|10|false|20|false|30|true |true|true; 2|11|true |19|true|32|false|true |true ; 3|10|true |20|false|30|true |true |true ; 4|12|true |22|true |29|false|true |true ; 5|9 |true |20|true |31|true |true |true#
+1|12|true |22|true |32|false|true|true; 2|13|true |20|true|31|true |true |true ; 3|12|true |42|true |32|true |true |true ; 4|9 |true |28|true |29|true |true |true ; 5|12|true |22|true |32|false|true |true #
+1|10|true |20|true |30|true |true|true; 2|11|true |19|true|32|false|true |true ; 3|10|true |20|true |30|true |true |true ; 4|12|false|22|true |29|true |true |true ; 5|9 |true |20|false|31|true |true |true#
+1|12|true |22|false|32|false|true|true; 2|13|false|20|true|31|true |true |true ; 3|12|true |42|true |32|true |true |true ; 4|9 |true |28|true |29|true |true |true ; 5|12|true |22|true |32|true |true |true #
+1|10|true |20|true |30|true |true|true; 2|11|true |19|true|32|false|true |true ; 3|10|true |20|false|30|true |true |true ; 4|12|true |22|true |29|false|true |true ; 5|9 |true |20|false|31|true |true |true#
+1|12|true |22|true |32|false|true|true; 2|13|false|20|true|31|true |true |true ; 3|12|true |42|true |32|true |true |true ; 4|9 |true |28|true |29|true |true |true ; 5|12|true |22|true |32|false|true |true #
